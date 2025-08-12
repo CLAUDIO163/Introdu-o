@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biologia e Questões Sociocientíficas - Sequência Didática Revolucionária</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Partículas animadas de fundo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header com animação de pulso */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 1s ease-out;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .main-title {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            animation: gradientShift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            color: #4a5568;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        /* Estratégia central com efeito 3D */
+        .strategy-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: perspective(1000px) rotateX(5deg);
+            animation: float3D 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategy-box::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float3D {
+            0%, 100% { transform: perspective(1000px) rotateX(5deg) translateY(0); }
+            50% { transform: perspective(1000px) rotateX(5deg) translateY(-10px); }
+        }
+
+        /* Cards das etapas com efeito cascata */
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: cardReveal 0.8s ease-out forwards;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            animation: loadingBar 2s ease-out;
+        }
+
+        @keyframes loadingBar {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-card:nth-child(1) { animation-delay: 0.2s; }
+        .step-card:nth-child(2) { animation-delay: 0.4s; }
+        .step-card:nth-child(3) { animation-delay: 0.6s; }
+        .step-card:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes cardReveal {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .step-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .step-title {
+            color: #2d3748;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .competency {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Resultados com animação de ícones */
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transform: scale(0);
+            animation: popIn 0.5s ease-out forwards;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item:nth-child(1) { animation-delay: 1s; }
+        .result-item:nth-child(2) { animation-delay: 1.2s; }
+        .result-item:nth-child(3) { animation-delay: 1.4s; }
+        .result-item:nth-child(4) { animation-delay: 1.6s; }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .result-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: rotateIcon 3s ease-in-out infinite;
+        }
+
+        @keyframes rotateIcon {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        /* Call to action final */
+        .cta-section {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 20px 80px rgba(240, 147, 251, 0.6); }
+        }
+
+        .cta-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.9); }
+        }
+
+        /* Footer autor */
+        .author-footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-style: italic;
+            opacity: 0.9;
+            animation: fadeIn 2s ease-out 2s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 0.9; }
+        }
+
+        /* Botão interativo */
+        .interactive-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            animation: buttonPulse 2s infinite;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .interactive-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Controles de áudio */
+        .audio-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            border-radius: 25px;
+            padding: 15px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .audio-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .audio-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .audio-btn.playing {
+            animation: audioWave 1s infinite;
+        }
+
+        @keyframes audioWave {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .speed-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .speed-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .speed-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .audio-status {
+            color: #4a5568;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .highlight-reading {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            padding: 2px 5px;
+            border-radius: 3px;
+            animation: highlightPulse 1s ease-in-out;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes highlightPulse {
+            0% { background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1)); }
+            50% { background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3)); }
+            100% { background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 1.8em;
+            }
+            
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .audio-controls {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas animadas de fundo -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header Principal -->
+        <div class="header">
+            <h1 class="main-title">🌱⚖️ BIOLOGIA E QUESTÕES SOCIOCIENTÍFICAS CONTROVERSAS</h1>
+            <p class="subtitle">AC: Alfabetização Científica</p>
+        </div>
+
+        <!-- Estratégia Revolucionária -->
+        <div class="strategy-box">
+            <h2 style="font-size: 1.8em; margin-bottom: 15px;">🔬 ESTRATÉGIA REVOLUCIONÁRIA</h2>
+            <p style="font-size: 1.2em;">Do "silêncio pedagógico" ao despertar científico</p>
+            <div style="margin-top: 20px;">
+                <p><strong>Competência AC:</strong> Reconhecer problemas científicos e socioambientais contextualizados no cotidiano.</p>
+                <p style="margin-top: 10px;"><strong>Competência AC:</strong> Elaborar perguntas investigativas, reflexivas e compreender a natureza da controvérsia da poda drástica e mortes de árvores urbanas!</p>
+            </div>
+        </div>
+
+        <!-- Cards das 4 Etapas -->
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">🌳</div>
+                <h3 class="step-title">AULA DE CAMPO</h3>
+                <p>Investigação nas ruas e avenidas!</p>
+                <div class="competency">
+                    <strong>Competência AC:</strong> Observar e registrar evidências em contextos reais relacionados com a poda drástica de árvores urbanas!
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">🏛️</div>
+                <h3 class="step-title">ARGUMENTAÇÃO</h3>
+                <p>Construção de argumentos sólidos!</p>
+                <div class="competency">
+                    <strong>Competência AC:</strong> Analisar e interpretar evidências científicas para sustentar ideias!
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">⚖️</div>
+                <h3 class="step-title">JÚRI SIMULADO</h3>
+                <p>Discussão organizada e decisão coletiva</p>
+                <div class="competency">
+                    <strong>Competência AC:</strong> Avaliar diferentes pontos de vista e tomar decisões fundamentadas.
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon">🔄</div>
+                <h3 class="step-title">TRANSFORMAÇÃO</h3>
+                <p>Formação de agentes de mudança!</p>
+                <div class="competency">
+                    <strong>Competência AC:</strong> Relacionar conhecimentos científicos a implicações sociais e ambientais considerando a temática.
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados Esperados -->
+        <div class="results-container">
+            <div class="result-item">
+                <div class="result-icon">👥</div>
+                <h4>Estudantes Protagonistas</h4>
+            </div>
+            <div class="result-item">
+                <div class="result-icon">🧠</div>
+                <h4>Pensamento Crítico</h4>
+            </div>
+            <div class="result-item">
+                <div class="result-icon">🌍</div>
+                <h4>Cidade como Laboratório</h4>
+            </div>
+            <div class="result-item">
+                <div class="result-icon">⚡</div>
+                <h4>Aprendizagem Ativa</h4>
+            </div>
+        </div>
+
+        <!-- Call to Action Final -->
+        <div class="cta-section">
+            <h2 class="cta-title">👥🌳 ESTUDANTES COM OLHAR DE CIENTISTAS!</h2>
+            <p style="font-size: 1.1em; margin: 20px 0;"><strong>Competência AC:</strong> Aplicar o pensamento científico para transformar o mundo real.</p>
+            <h3 style="font-size: 1.5em; margin-top: 30px;">🧠 VOCÊ ESTÁ PREPARADO PARA ESTA REVOLUÇÃO PEDAGÓGICA?</h3>
+            <button class="interactive-btn" onclick="startRevolution()">COMEÇAR A REVOLUÇÃO!</button>
+        </div>
+
+        <!-- Footer Autor -->
+        <div class="author-footer">
+            <p>Fragmento da sequência didática do doutorado em Ensino de Ciências Exatas da UNIVATES-RS.</p>
+            <p>Autor: Cláudio da Silva Mendonça, 2025.</p>
+        </div>
+    </div>
+
+    <!-- Controles de Áudio -->
+    <div class="audio-controls">
+        <button class="audio-btn" id="playBtn" onclick="toggleNarration()" title="Iniciar narração">
+            <span id="playIcon">▶️</span>
+        </button>
+        <div class="speed-control">
+            <span style="color: #4a5568; font-size: 0.9em;">Velocidade:</span>
+            <button class="speed-btn" onclick="setSpeed(0.8)">0.8x</button>
+            <button class="speed-btn" onclick="setSpeed(1)">1x</button>
+            <button class="speed-btn active" onclick="setSpeed(1.2)">1.2x</button>
+        </div>
+        <span class="audio-status" id="audioStatus">Clique para ouvir</span>
+    </div>
+
+    <script>
+        // Sistema de narração
+        let speechSynthesis = window.speechSynthesis;
+        let currentUtterance = null;
+        let isPlaying = false;
+        let currentSpeed = 1.2; // Velocidade padrão 1.2x
+        let textSegments = [];
+        let currentSegmentIndex = 0;
+
+        // Preparar o texto para narração
+        function prepareNarrationText() {
+            textSegments = [
+                {
+                    text: "Biologia e Questões Sociocientíficas Controversas. Alfabetização Científica.",
+                    element: document.querySelector('.header')
+                },
+                {
+                    text: "Estratégia Revolucionária: Do silêncio pedagógico ao despertar científico.",
+                    element: document.querySelector('.strategy-box')
+                },
+                {
+                    text: "Competência de Alfabetização Científica: Reconhecer problemas científicos e socioambientais contextualizados no cotidiano.",
+                    element: document.querySelector('.strategy-box')
+                },
+                {
+                    text: "Competência de Alfabetização Científica: Elaborar perguntas investigativas, reflexivas e compreender a natureza da controvérsia da poda drástica e mortes de árvores urbanas!",
+                    element: document.querySelector('.strategy-box')
+                },
+                {
+                    text: "Primeira etapa: Aula de Campo. Investigação nas ruas e avenidas! Competência: Observar e registrar evidências em contextos reais relacionados com a poda drástica de árvores urbanas!",
+                    element: document.querySelectorAll('.step-card')[0]
+                },
+                {
+                    text: "Segunda etapa: Argumentação. Construção de argumentos sólidos! Competência: Analisar e interpretar evidências científicas para sustentar ideias!",
+                    element: document.querySelectorAll('.step-card')[1]
+                },
+                {
+                    text: "Terceira etapa: Júri Simulado. Discussão organizada e decisão coletiva. Competência: Avaliar diferentes pontos de vista e tomar decisões fundamentadas.",
+                    element: document.querySelectorAll('.step-card')[2]
+                },
+                {
+                    text: "Quarta etapa: Transformação. Formação de agentes de mudança! Competência: Relacionar conhecimentos científicos a implicações sociais e ambientais considerando a temática.",
+                    element: document.querySelectorAll('.step-card')[3]
+                },
+                {
+                    text: "Resultados esperados: Estudantes Protagonistas. Pensamento Crítico. Cidade como Laboratório. Aprendizagem Ativa.",
+                    element: document.querySelector('.results-container')
+                },
+                {
+                    text: "Estudantes com olhar de cientistas! Competência de Alfabetização Científica: Aplicar o pensamento científico para transformar o mundo real.",
+                    element: document.querySelector('.cta-section')
+                },
+                {
+                    text: "Você está preparado para esta revolução pedagógica?",
+                    element: document.querySelector('.cta-section')
+                },
+                {
+                    text: "Fragmento da sequência didática do doutorado em Ensino de Ciências Exatas da UNIVATES-RS. Autor: Cláudio da Silva Mendonça, 2025.",
+                    element: document.querySelector('.author-footer')
+                }
+            ];
+        }
+
+        // Função para iniciar/pausar narração
+        function toggleNarration() {
+            const playBtn = document.getElementById('playBtn');
+            const playIcon = document.getElementById('playIcon');
+            const audioStatus = document.getElementById('audioStatus');
+
+            if (!isPlaying) {
+                startNarration();
+                playIcon.textContent = '⏸️';
+                playBtn.classList.add('playing');
+                audioStatus.textContent = 'Narrando...';
+            } else {
+                stopNarration();
+                playIcon.textContent = '▶️';
+                playBtn.classList.remove('playing');
+                audioStatus.textContent = 'Pausado';
+            }
+        }
+
+        // Iniciar narração
+        function startNarration() {
+            if (currentSegmentIndex === 0) {
+                prepareNarrationText();
+            }
+            
+            isPlaying = true;
+            speakNextSegment();
+        }
+
+        // Falar próximo segmento
+        function speakNextSegment() {
+            if (currentSegmentIndex >= textSegments.length) {
+                // Narração completa
+                resetNarration();
+                return;
+            }
+
+            if (!isPlaying) return;
+
+            const segment = textSegments[currentSegmentIndex];
+            currentUtterance = new SpeechSynthesisUtterance(segment.text);
+            
+            // Configurar voz em português
+            const voices = speechSynthesis.getVoices();
+            const portugueseVoice = voices.find(voice => voice.lang.includes('pt-BR')) || 
+                                   voices.find(voice => voice.lang.includes('pt')) ||
+                                   voices[0];
+            
+            if (portugueseVoice) {
+                currentUtterance.voice = portugueseVoice;
+            }
+            
+            currentUtterance.rate = currentSpeed;
+            currentUtterance.pitch = 1;
+            currentUtterance.volume = 1;
+
+            // Destacar elemento sendo lido (sem ocultar)
+            if (segment.element) {
+                // Remover destaque anterior
+                document.querySelectorAll('.highlight-reading').forEach(el => {
+                    el.classList.remove('highlight-reading');
+                });
+                
+                // Adicionar destaque ao elemento atual
+                segment.element.classList.add('highlight-reading');
+                
+                // Scroll suave até o elemento
+                segment.element.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+
+            // Quando terminar de falar este segmento
+            currentUtterance.onend = () => {
+                // Manter o elemento visível, apenas remover o destaque depois
+                setTimeout(() => {
+                    if (segment.element) {
+                        segment.element.classList.remove('highlight-reading');
+                    }
+                }, 300);
+                
+                currentSegmentIndex++;
+                speakNextSegment();
+            };
+
+            // Falar
+            speechSynthesis.speak(currentUtterance);
+        }
+
+        // Parar narração
+        function stopNarration() {
+            isPlaying = false;
+            speechSynthesis.cancel();
+            
+            // Remover destaques sem ocultar elementos
+            document.querySelectorAll('.highlight-reading').forEach(el => {
+                el.classList.remove('highlight-reading');
+            });
+        }
+
+        // Resetar narração
+        function resetNarration() {
+            stopNarration();
+            currentSegmentIndex = 0;
+            document.getElementById('playIcon').textContent = '▶️';
+            document.getElementById('playBtn').classList.remove('playing');
+            document.getElementById('audioStatus').textContent = 'Narração completa';
+            
+            setTimeout(() => {
+                document.getElementById('audioStatus').textContent = 'Clique para ouvir';
+            }, 3000);
+        }
+
+        // Ajustar velocidade
+        function setSpeed(speed) {
+            currentSpeed = speed;
+            
+            // Atualizar botões
+            document.querySelectorAll('.speed-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Se estiver tocando, reiniciar com nova velocidade
+            if (isPlaying) {
+                speechSynthesis.cancel();
+                setTimeout(() => {
+                    speakNextSegment();
+                }, 100);
+            }
+        }
+
+        // Garantir que as vozes estejam carregadas
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {
+                console.log('Vozes carregadas');
+            };
+        }
+
+        // Criar partículas animadas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 20 + 10 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Função do botão interativo
+        function startRevolution() {
+            // Criar efeito de explosão de partículas
+            const button = event.target;
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
+                particle.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                particle.style.borderRadius = '50%';
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '9999';
+                document.body.appendChild(particle);
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const velocity = 200 + Math.random() * 200;
+                
+                particle.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'cubic-bezier(0, .9, .57, 1)'
+                }).onfinish = () => particle.remove();
+            }
+            
+            // Animação de feedback
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                button.textContent = 'REVOLUÇÃO INICIADA! 🚀';
+                button.style.background = 'linear-gradient(135deg, #f093fb, #f5576c)';
+            }, 200);
+            
+            // Adicionar efeito de vibração suave em todos os cards
+            document.querySelectorAll('.step-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        card.style.animation = '';
+                    }, 500);
+                }, index * 100);
+            });
+        }
+
+        // Adicionar animação de shake
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Inicializar partículas quando a página carregar
+        window.addEventListener('load', createParticles);
+
+        // Adicionar efeito parallax suave ao fazer scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.particles');
+            parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
